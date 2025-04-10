@@ -1,0 +1,24 @@
+#define PIR_PIN 14     // Chân OUT 
+#define BUZZER_PIN 26  // Chân điều khiển còi
+
+void setup() {
+  pinMode(PIR_PIN, INPUT);        // Cảm biến đọc tín hiệu vào
+  pinMode(BUZZER_PIN, OUTPUT);    // Còi là đầu ra
+  Serial.begin(115200);           // theo dỗi
+  Serial.println("Hệ thống bắt đầu...");
+}
+
+void loop() {
+  int motionDetected = digitalRead(PIR_PIN); // Đọc trạng thái từ cảm biến
+
+  if (motionDetected == HIGH) {
+    Serial.println("Có chuyển động!");
+    digitalWrite(BUZZER_PIN, HIGH); // Bật còi
+    delay(1000);                    // Giữ còi trong 1 giây
+    digitalWrite(BUZZER_PIN, LOW);  // Tắt còi
+  } else {
+    digitalWrite(BUZZER_PIN, LOW);  // Không có chuyển động thì đảm bảo tắt còi
+  }
+
+  delay(100); // Tránh đọc quá nhanh
+}
